@@ -1,0 +1,133 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Country Details Generator</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <!-- External CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body style="background-color:rgb(223, 216, 207);">
+    <div class="Border" style="background: linear-gradient(to right,rgb(24, 54, 152),rgb(221, 7, 7)); width: 1000px;height: 650px;position: relative;left: 250px ;top: 50px;border-radius: 50px;border:0px;box-shadow: 5px 5px 5px;"> 
+    <div class="container text-center">
+        <h1 class="text-primary mb-3">Country Details Generator</h1>
+        
+       <!-- Search Bar -->
+        <div class="mb-3">
+            <input type="text" 
+                   class="form-control w-75 mx-auto" 
+                   id="search" 
+                   placeholder="Search for a country..." 
+                   onkeydown="searchs(event)">
+            <i class="fa-solid fa-magnifying-glass ms-2"></i>
+        </div>
+
+        <!-- Generate Button -->
+        <button class="btn btn-primary w-50 mb-3" onclick="ResponeApi()">Generate</button>
+
+        <!-- Country Details Section -->
+        <div class="country-details mt-3">
+            <h2 id="cname" class="text-uppercase text-info">Country Name</h2>
+            <h3 id="capname" class="text-secondary">Capital</h3>
+
+            <!-- Flag -->
+            <div class="flagimage mt-3" id="fimage"></div>
+
+            <!-- Additional Details -->
+            <div class="example mt-3">
+                <div class="examples" id="currency">Currency</div>
+                <div class="examples" id="population">Population</div>
+                <div class="examples" id="continent">Continent</div>
+            </div>
+
+            <!-- Maps Section -->
+            <div id="maps" class="maps"></div>
+        </div>
+    </div></div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const ResponeApi=async()=>{
+            const serverData=await fetch("https://restcountries.com/v3.1/all")
+            const userData=await serverData.json();
+             
+            let randum=Math.floor(Math.random()*userData.length);
+            let det=userData[randum];
+            
+            cname=document.getElementById("cname")
+            cname.innerHTML=det.name.common
+    
+    
+            capname=document.getElementById("capname")
+            capname.innerHTML=det.capital
+    
+            fimage=document.getElementById("fimage")
+            fimage.innerHTML=`<img src="${det.flags.png}" alt="">`
+    
+    
+            currency=document.getElementById("currency")
+            currency.innerHTML=Object.keys(det.currencies)
+    
+            poppulation=document.getElementById("population")
+            population.innerHTML=det.population
+    
+            continent=document.getElementById("continent")
+            continent.innerHTML=det.continents
+    
+            maps=document.getElementById("maps")
+            maps.innerHTML=` <a href="${det.maps.googleMaps}">click hear</a>`
+    
+    
+    
+    
+        }
+    
+    
+         const searchs=async(event)=>{
+            if(event.key=='Enter'){
+                console.log(search.value);
+                
+            const serverData=await fetch(`https://restcountries.com/v3.1/name/${search.value}`)
+            const userData=await serverData.json();
+             
+            let det=userData[0]
+            
+            cname=document.getElementById("cname")
+            cname.innerHTML=det.name.common
+    
+    
+            capname=document.getElementById("capname")
+            capname.innerHTML=det.capital
+    
+            fimage=document.getElementById("fimage")
+            fimage.innerHTML=`<img src="${det.flags.png}" alt="">`
+    
+    
+            currency=document.getElementById("currency")
+            currency.innerHTML=Object.keys(det.currencies)
+    
+            poppulation=document.getElementById("population")
+            population.innerHTML=det.population
+    
+            continent=document.getElementById("continent")
+            continent.innerHTML=det.continents
+    
+            maps=document.getElementById("maps")
+            maps.innerHTML=` <a href="${det.maps.googleMaps}">click hear</a>`
+    
+            }
+    
+    
+        }
+       
+    </script>
+</body>
+</html>
+
+
+
+</html>
